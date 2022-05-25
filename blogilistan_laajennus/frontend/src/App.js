@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
@@ -11,13 +11,13 @@ import loginService from './services/login'
 import userService from './services/user'
 import { setNotificationMessage, resetNotification } from './reducers/notificationReducer'
 import { addBlog, setAllBlogs } from './reducers/blogReducer'
+import { loginUser, logoutUser, setLoggedUser } from './reducers/userReducer'
 const App = () => {
-  const [user, setUser] = useState(null)
+  const user = useSelector((state) => state.user)
   const blogFormRef = useRef()
   const byLikes = (b1, b2) => (b2.likes > b1.likes ? 1 : -1)
   const dispatch = useDispatch()
   const blogs = useSelector((state) => state.blogs)
-  console.log('blogs', blogs)
 
   useEffect(() => {
     const getBlogs = async () => {
@@ -31,7 +31,7 @@ const App = () => {
   useEffect(() => {
     const userFromStorage = userService.getUser()
     if (userFromStorage) {
-      setUser(userFromStorage)
+      dispatch(setLoggedUser(userFromStorage))
     }
   }, [])
 
@@ -42,7 +42,7 @@ const App = () => {
         password
       })
       .then((user) => {
-        setUser(user)
+        dispatch(loginUser(user))
         userService.setUser(user)
         notify(`${user.name} logged in!`)
       })
@@ -52,7 +52,7 @@ const App = () => {
   }
 
   const logout = () => {
-    setUser(null)
+    dispatch(logoutUser())
     userService.clearUser()
     notify('good bye!')
   }
