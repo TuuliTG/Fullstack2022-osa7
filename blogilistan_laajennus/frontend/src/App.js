@@ -5,10 +5,11 @@ import LoginForm from './components/LoginForm'
 import NewBlogForm from './components/NewBlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
-
+import { useDispatch } from 'react-redux'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import userService from './services/user'
+import { setNotificationMessage, resetNotification } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -16,7 +17,7 @@ const App = () => {
   const [notification, setNotification] = useState(null)
   const blogFormRef = useRef()
   const byLikes = (b1, b2) => (b2.likes > b1.likes ? 1 : -1)
-
+  const dispatch = useDispatch()
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs.sort(byLikes)))
   }, [])
@@ -94,16 +95,17 @@ const App = () => {
   }
 
   const notify = (message, type = 'info') => {
-    setNotification({ message, type })
+    const payload = { message: message, type: type }
+    dispatch(setNotificationMessage(payload))
     setTimeout(() => {
-      setNotification(null)
+      dispatch(resetNotification())
     }, 5000)
   }
 
   if (user === null) {
     return (
       <>
-        <Notification notification={notification} />
+        <Notification />
         <LoginForm onLogin={login} />
       </>
     )
@@ -113,7 +115,7 @@ const App = () => {
     <div>
       <h2>blogs</h2>
 
-      <Notification notification={notification} />
+      <Notification />
 
       <div>
         {user.name} logged in
