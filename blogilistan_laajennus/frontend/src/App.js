@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-
+import { Routes, Route } from 'react-router-dom'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import NewBlogForm from './components/NewBlogForm'
@@ -12,6 +12,8 @@ import userService from './services/user'
 import { setNotificationMessage, resetNotification } from './reducers/notificationReducer'
 import { addBlog, setAllBlogs } from './reducers/blogReducer'
 import { loginUser, logoutUser, setLoggedUser } from './reducers/userReducer'
+import UsersPage from './components/UsersPage'
+import LoggedUser from './components/LoggedUser'
 const App = () => {
   const user = useSelector((state) => state.user)
   const blogFormRef = useRef()
@@ -49,12 +51,6 @@ const App = () => {
       .catch(() => {
         notify('wrong username/password', 'alert')
       })
-  }
-
-  const logout = () => {
-    dispatch(logoutUser())
-    userService.clearUser()
-    notify('good bye!')
   }
 
   const createBlog = async (blog) => {
@@ -120,24 +116,36 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
+      <Routes>
+        <Route path="/users" element={<UsersPage />}></Route>
+        <Route
+          path="/"
+          element={
+            <div>
+              <h2>Blogs App</h2>
 
-      <Notification />
+              <Notification />
 
-      <div>
-        {user.name} logged in
-        <button onClick={logout}>logout</button>
-      </div>
+              <LoggedUser />
 
-      <Togglable buttonLabel="new blog" ref={blogFormRef}>
-        <NewBlogForm onCreate={createBlog} />
-      </Togglable>
+              <Togglable buttonLabel="new blog" ref={blogFormRef}>
+                <NewBlogForm onCreate={createBlog} />
+              </Togglable>
 
-      <div id="blogs">
-        {blogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} likeBlog={likeBlog} removeBlog={removeBlog} user={user} />
-        ))}
-      </div>
+              <div id="blogs">
+                {blogs.map((blog) => (
+                  <Blog
+                    key={blog.id}
+                    blog={blog}
+                    likeBlog={likeBlog}
+                    removeBlog={removeBlog}
+                    user={user}
+                  />
+                ))}
+              </div>
+            </div>
+          }></Route>
+      </Routes>
     </div>
   )
 }

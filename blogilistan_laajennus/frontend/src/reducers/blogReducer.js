@@ -12,8 +12,6 @@ const blogSlice = createSlice({
     },
     setAllBlogs(state, action) {
       const content = action.payload
-      console.log('content', content)
-
       return content
     }
   }
