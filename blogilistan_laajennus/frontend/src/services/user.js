@@ -31,6 +31,11 @@ const getAllUsers = () => {
   return request.then((response) => response.data)
 }
 
+const getUserById = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`)
+  return response.data
+}
+
 const getToken = () => token
 
 export default {
@@ -38,5 +43,6 @@ export default {
   getUser,
   clearUser,
   getToken,
-  getAllUsers
+  getAllUsers,
+  getUserById
 }

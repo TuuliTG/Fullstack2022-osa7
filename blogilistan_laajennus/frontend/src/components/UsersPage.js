@@ -3,9 +3,11 @@ import userService from '../services/user'
 import { useSelector, useDispatch } from 'react-redux'
 import LoggedUser from './LoggedUser'
 import { setUsers } from '../reducers/usersReducer'
+import { useNavigate } from 'react-router-dom'
 const UsersPage = () => {
   const dispatch = useDispatch()
   const users = useSelector((state) => state.users)
+  const navigate = useNavigate()
   useEffect(() => {
     const getUsers = async () => {
       let res = await userService.getAllUsers()
@@ -14,6 +16,7 @@ const UsersPage = () => {
     }
     getUsers()
   }, [])
+
   return (
     <div>
       <h2>Blogs App</h2>
@@ -29,7 +32,11 @@ const UsersPage = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td>{user.name}</td>
+              <td>
+                <button id="link" type="button" onClick={() => navigate(`/users/${user.id}`)}>
+                  {user.name}
+                </button>
+              </td>
               <td>{user.blogs.length}</td>
             </tr>
           ))}

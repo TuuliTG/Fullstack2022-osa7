@@ -14,6 +14,7 @@ import { addBlog, setAllBlogs } from './reducers/blogReducer'
 import { loginUser, logoutUser, setLoggedUser } from './reducers/userReducer'
 import UsersPage from './components/UsersPage'
 import LoggedUser from './components/LoggedUser'
+import UserPage from './components/UserPage'
 const App = () => {
   const user = useSelector((state) => state.user)
   const blogFormRef = useRef()
@@ -118,6 +119,7 @@ const App = () => {
     <div>
       <Routes>
         <Route path="/users" element={<UsersPage />}></Route>
+        <Route path="/users/:id" element={<UserPage />}></Route>
         <Route
           path="/"
           element={
