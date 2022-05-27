@@ -7,8 +7,10 @@ const blogSlice = createSlice({
   initialState,
   reducers: {
     addBlog(state, action) {
-      const content = action.payload
-      state.push({ content })
+      console.log('payload', action.payload)
+
+      const { author, id, likes, title, url, user } = action.payload
+      state.push({ author: author, id: id, likes: likes, title: title, url: url, user: user })
     },
     setAllBlogs(state, action) {
       const content = action.payload

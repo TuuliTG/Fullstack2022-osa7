@@ -22,13 +22,18 @@ const BlogDetails = () => {
       setLikes(res.likes)
     }
     getBlogById(blogId)
+    setTimeout(() => {
+      dispatch(resetNotification())
+    }, 5000)
   }, [])
 
   const likeBlog = async () => {
+    console.log('user', blog.user)
+
     const updatedBlog = {
       ...blog,
       likes: (blog.likes || 0) + 1,
-      user: blog.user ? blog.user.id : null
+      user: blog.user && blog.user !== null ? blog.user.id : null
     }
 
     blogService.update(updatedBlog.id, updatedBlog).then((blog) => {
@@ -49,7 +54,7 @@ const BlogDetails = () => {
       return
     }
 
-    blogService.remove(blog.id).then((b) => {
+    blogService.remove(blog.id, loggedUser.token).then((b) => {
       navigate('/')
     })
   }
@@ -60,9 +65,7 @@ const BlogDetails = () => {
 
   return (
     <div>
-      <h2>Blogs App</h2>
       <Notification />
-      <LoggedUser />
       <h2>
         {blog.title} by {blog.author}
       </h2>
@@ -73,9 +76,7 @@ const BlogDetails = () => {
         {likes} likes <button onClick={() => likeBlog(blog.id)}>like</button>
       </div>
       Added by {addedBy}
-      {loggedUser.name === blog.user.name && (
-        <button onClick={() => removeBlog()}>Delete blog</button>
-      )}
+      {loggedUser.name === { addedBy } && <button onClick={() => removeBlog()}>Delete blog</button>}
     </div>
   )
 }

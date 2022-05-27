@@ -3,25 +3,19 @@ import UsersPage from './components/UsersPage'
 import UserPage from './components/UserPage'
 import BlogDetails from './components/BlogDetails'
 import FrontPage from './components/FrontPage'
-import userService from './services/user'
-import { useDispatch } from 'react-redux'
-import { setLoggedUser } from './reducers/userReducer'
-import { useEffect } from 'react'
+import NavigationBar from './components/Navigation'
+import LoginForm from './components/LoginForm'
+
 const App = () => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    const userFromStorage = userService.getUser()
-    if (userFromStorage) {
-      dispatch(setLoggedUser(userFromStorage))
-    }
-  }, [])
   return (
     <div>
+      <NavigationBar />
       <Routes>
         <Route path="/users" element={<UsersPage />}></Route>
         <Route path="/users/:id" element={<UserPage />}></Route>
         <Route path="/blogs/:id" element={<BlogDetails />}></Route>
         <Route path="/" element={<FrontPage />}></Route>
+        <Route path="/login" element={<LoginForm />}></Route>
       </Routes>
     </div>
   )

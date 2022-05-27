@@ -3,10 +3,10 @@ import userService from './user'
 
 const baseUrl = '/api/blogs'
 
-const config = () => {
+const config = (token) => {
   return {
     headers: {
-      Authorization: `bearer ${userService.getToken()}`
+      Authorization: `bearer ${token}`
     }
   }
 }
@@ -21,8 +21,8 @@ const getById = async (id) => {
   return response.data
 }
 
-const create = async (newObject) => {
-  const response = await axios.post(baseUrl, newObject, config())
+const create = async (newObject, token) => {
+  const response = await axios.post(baseUrl, newObject, config(token))
   return response.data
 }
 
@@ -31,8 +31,8 @@ const update = (id, newObject) => {
   return request.then((response) => response.data)
 }
 
-const remove = (id) => {
-  return axios.delete(`${baseUrl}/${id}`, config())
+const remove = (id, token) => {
+  return axios.delete(`${baseUrl}/${id}`, config(token))
 }
 
 export default { getAll, create, update, remove, getById }

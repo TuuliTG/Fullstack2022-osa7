@@ -6,7 +6,6 @@ const STORAGE_KEY = 'loggedBlogAppUser'
 const baseUrl = '/api/users'
 
 const setUser = (user) => {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
   token = user.token
 }
 

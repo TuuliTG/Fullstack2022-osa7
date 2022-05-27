@@ -19,8 +19,6 @@ const UserPage = () => {
 
   return (
     <div>
-      <h2>Blogs App</h2>
-      <LoggedUser />
       {user !== null ? (
         <div>
           <h2>{user.name}</h2>

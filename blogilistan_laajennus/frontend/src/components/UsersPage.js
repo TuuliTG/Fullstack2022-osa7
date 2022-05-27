@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const UsersPage = () => {
   const dispatch = useDispatch()
   const users = useSelector((state) => state.users)
+  const loggedUser = useSelector((state) => state.user)
   const navigate = useNavigate()
   useEffect(() => {
     const getUsers = async () => {
@@ -17,10 +18,12 @@ const UsersPage = () => {
     getUsers()
   }, [])
 
+  if (loggedUser === null) {
+    navigate('/login')
+  }
+
   return (
     <div>
-      <h2>Blogs App</h2>
-      <LoggedUser />
       <h2>Users</h2>
       <table>
         <thead>

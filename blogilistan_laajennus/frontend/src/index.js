@@ -2,28 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import { Provider } from 'react-redux'
-import { configureStore } from '@reduxjs/toolkit'
-
-import notificationReducer from './reducers/notificationReducer'
-import blogReducer from './reducers/blogReducer'
-import userReducer from './reducers/userReducer'
-import usersReducer from './reducers/usersReducer'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { PersistGate } from 'redux-persist/integration/react'
+import store, { persistor } from './store'
 
-const store = configureStore({
-  reducer: {
-    notification: notificationReducer,
-    blogs: blogReducer,
-    user: userReducer,
-    users: usersReducer
-  }
-})
+if (window.Cypress) {
+  window.store = store
+}
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <PersistGate persistor={persistor}>
+      <Router>
+        <App />
+      </Router>
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 )
