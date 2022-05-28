@@ -1,5 +1,4 @@
 import axios from 'axios'
-import userService from './user'
 
 const baseUrl = '/api/blogs'
 

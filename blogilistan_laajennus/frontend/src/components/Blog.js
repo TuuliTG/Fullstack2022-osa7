@@ -6,7 +6,6 @@ const Blog = ({ blog }) => {
     borderWidth: 1
   }
   const link = `/blogs/${blog.id}`
-  //console.log('logging', blog)
 
   return (
     <div style={style} className="blog">
