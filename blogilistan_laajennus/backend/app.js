@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 require('express-async-errors')
+const path = require('path')
 
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
@@ -24,14 +25,18 @@ mongoose
   })
 
 app.use(cors())
-app.use(express.static('build'))
+//app.use(express.static('build'))
+app.use(express.static(path.join(__dirname, 'build')))
+
 app.use(express.json())
 
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', userExtractor, blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/comments', commentRouter)
-
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
 if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing')
   app.use('/api/testing', testingRouter)

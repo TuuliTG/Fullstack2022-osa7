@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import userService from '../services/user'
 import { useSelector, useDispatch } from 'react-redux'
-import LoggedUser from './LoggedUser'
 import { setUsers } from '../reducers/usersReducer'
 import { useNavigate } from 'react-router-dom'
 const UsersPage = () => {
