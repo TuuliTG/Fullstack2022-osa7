@@ -23,9 +23,9 @@ const UsersPage = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <h2>Users</h2>
-      <table>
+      <table className="table table-hover">
         <thead>
           <tr>
             <th>Name</th>
@@ -36,9 +36,9 @@ const UsersPage = () => {
           {users.map((user) => (
             <tr key={user.id}>
               <td>
-                <button id="link" type="button" onClick={() => navigate(`/users/${user.id}`)}>
+                <a id="link" type="button" onClick={() => navigate(`/users/${user.id}`)}>
                   {user.name}
-                </button>
+                </a>
               </td>
               <td>{user.blogs.length}</td>
             </tr>

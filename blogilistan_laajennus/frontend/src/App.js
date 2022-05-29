@@ -5,6 +5,7 @@ import BlogDetails from './components/BlogDetails'
 import FrontPage from './components/FrontPage'
 import NavigationBar from './components/Navigation'
 import LoginForm from './components/LoginForm'
+import './App.css'
 
 const App = () => {
   return (

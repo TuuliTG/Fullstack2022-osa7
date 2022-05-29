@@ -6,6 +6,7 @@ import userService from '../services/user'
 import { loginUser } from '../reducers/userReducer'
 import { useNavigate } from 'react-router-dom'
 import { setNotificationMessage, resetNotification } from '../reducers/notificationReducer'
+import { Form, Button } from 'react-bootstrap'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -45,32 +46,34 @@ const LoginForm = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Notification />
-      <h2>Log in to application</h2>
+      <h2 className="center">Log in to application</h2>
 
-      <form onSubmit={handleSubmit}>
+      <Form className="center" onSubmit={handleSubmit}>
         <div>
-          username
-          <input
+          <Form.Control
+            type="text"
+            className="m-2"
+            placeholder="Username"
             value={username}
             onChange={({ target }) => setUsername(target.value)}
-            id="username"
-          />
+            id="username"></Form.Control>
         </div>
         <div>
-          password
-          <input
+          <Form.Control
             type="password"
+            className="m-2"
             value={password}
+            placeholder="Password"
             onChange={({ target }) => setPassword(target.value)}
             id="password"
           />
         </div>
-        <button id="login-button" type="submit">
+        <Button id="login-button" className="m-2" type="submit" variant="primary">
           login
-        </button>
-      </form>
+        </Button>
+      </Form>
     </div>
   )
 }

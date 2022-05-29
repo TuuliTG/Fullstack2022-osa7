@@ -55,18 +55,25 @@ const FrontPage = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Notification />
 
       <Togglable buttonLabel="new blog" ref={blogFormRef}>
         <NewBlogForm onCreate={createBlog} />
       </Togglable>
-
-      <div id="blogs">
-        {blogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
-      </div>
+      <table className="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Author</th>
+          </tr>
+        </thead>
+        <tbody>
+          {blogs.map((blog) => (
+            <Blog key={blog.id} blog={blog} />
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }

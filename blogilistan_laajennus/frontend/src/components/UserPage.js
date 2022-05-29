@@ -18,7 +18,7 @@ const UserPage = () => {
   }, [])
 
   return (
-    <div>
+    <div className="container">
       {user !== null ? (
         <div>
           <h2>{user.name}</h2>

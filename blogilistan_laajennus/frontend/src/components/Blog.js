@@ -1,18 +1,19 @@
-const Blog = ({ blog }) => {
-  const style = {
-    padding: 3,
-    margin: 5,
-    borderStyle: 'solid',
-    borderWidth: 1
-  }
-  const link = `/blogs/${blog.id}`
+import { useNavigate } from 'react-router-dom'
 
+const Blog = ({ blog }) => {
+  const link = `/blogs/${blog.id}`
+  const navigate = useNavigate()
   return (
-    <div style={style} className="blog">
-      <a href={link}>
-        {blog.title} {blog.author}
-      </a>
-    </div>
+    <>
+      <tr>
+        <td>
+          <a type="button" onClick={() => navigate(link)}>
+            {blog.title}
+          </a>
+        </td>
+        <td>{blog.author}</td>
+      </tr>
+    </>
   )
 }
 

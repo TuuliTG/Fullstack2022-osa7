@@ -17,7 +17,7 @@ const CommentForm = ({ blogId }) => {
           placeholder="Give your comment"
           onChange={({ target }) => setComment(target.value)}
         />
-        <Button variant="primary" type="submit">
+        <Button className="m-2" variant="primary" type="submit">
           Submit
         </Button>
       </Form>

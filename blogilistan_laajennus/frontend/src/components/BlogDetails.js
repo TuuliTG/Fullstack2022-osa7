@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { setNotificationMessage, resetNotification } from '../reducers/notificationReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import Notification from './Notification'
-import { Button } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
 import CommentForm from './CommentForm'
 
 const BlogDetails = () => {
@@ -37,9 +37,9 @@ const BlogDetails = () => {
     const updatedBlog = {
       ...blog,
       likes: (blog.likes || 0) + 1,
-      user: blog.user && blog.user !== null ? blog.user.id : null
+      user: blog.user && blog.user !== null ? blog.user.id : null,
+      comments: blog.comments.map((c) => c.id)
     }
-
     blogService.update(updatedBlog.id, updatedBlog).then((blog) => {
       const payload = { message: `you liked '${blog.title}' by ${blog.author}`, type: 'info' }
       dispatch(setNotificationMessage(payload))
@@ -68,25 +68,44 @@ const BlogDetails = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <Notification />
-      <h2>
+      <h2 className="header">
         {blog.title} by {blog.author}
       </h2>
-      <div>
-        <a href={blog.url}>{blog.url}</a>
-      </div>
-      <div>
-        {likes} likes <button onClick={() => likeBlog(blog.id)}>like</button>
-      </div>
-      Added by {addedBy}
-      {loggedUser.name === { addedBy } && <button onClick={() => removeBlog()}>Delete blog</button>}
-      <h3>Comments</h3>
-      <Button onClick={() => setShowCommentForm(!showCommentForm)}>
+      <Card>
+        <Card.Body>
+          <Card.Link href={blog.url}>{blog.url}</Card.Link>
+        </Card.Body>
+      </Card>
+      <Card>
+        <Card.Body>
+          <Card.Title>
+            {likes} likes{' '}
+            <Button className="m-2" variant="secondary" onClick={() => likeBlog(blog.id)}>
+              like
+            </Button>
+          </Card.Title>
+        </Card.Body>
+      </Card>
+      <Card>
+        <Card.Title className="m-2">Added by {addedBy}</Card.Title>
+      </Card>
+
+      <Card>
+        <Card.Body>
+          <Card.Title>Comments:</Card.Title>
+          <ul>{comments}</ul>
+        </Card.Body>
+      </Card>
+      <Button
+        className="m-2"
+        variant="secondary"
+        onClick={() => setShowCommentForm(!showCommentForm)}>
         {showCommentForm === true ? 'Close form' : 'Add a comment'}
       </Button>
+      {loggedUser.name === addedBy && <Button onClick={() => removeBlog()}>Delete blog</Button>}
       {showCommentForm ? <CommentForm blogId={blog.id} /> : null}
-      <ul>{comments}</ul>
     </div>
   )
 }

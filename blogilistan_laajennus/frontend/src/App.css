@@ -1,0 +1,11 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.header {
+    background-color:rgb(200, 203, 205)
+}
